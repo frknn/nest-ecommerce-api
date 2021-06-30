@@ -1,34 +1,34 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { MerchantService } from './merchant.service';
+import { MerchantsService } from './merchants.service';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
 
-@Controller('merchant')
-export class MerchantController {
-  constructor(private readonly merchantService: MerchantService) {}
+@Controller('merchants')
+export class MerchantsController {
+  constructor(private readonly merchantsService: MerchantsService) {}
 
   @Post()
   create(@Body() createMerchantDto: CreateMerchantDto) {
-    return this.merchantService.create(createMerchantDto);
+    return this.merchantsService.create(createMerchantDto);
   }
 
   @Get()
   findAll() {
-    return this.merchantService.findAll();
+    return this.merchantsService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.merchantService.findOne(+id);
+    return this.merchantsService.findOne(+id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateMerchantDto: UpdateMerchantDto) {
-    return this.merchantService.update(+id, updateMerchantDto);
+    return this.merchantsService.update(+id, updateMerchantDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.merchantService.remove(+id);
+    return this.merchantsService.remove(+id);
   }
 }

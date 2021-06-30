@@ -3,13 +3,13 @@ import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
 
 @Injectable()
-export class MerchantService {
+export class MerchantsService {
   create(createMerchantDto: CreateMerchantDto) {
     return 'This action adds a new merchant';
   }
 
   findAll() {
-    return `This action returns all merchant`;
+    return `This action returns all merchants`;
   }
 
   findOne(id: number) {
