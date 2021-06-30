@@ -15,7 +15,7 @@ export class Product {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column({ unique: true })
   name: string;
 
   @Column()

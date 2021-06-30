@@ -13,25 +13,27 @@ export class ProductsService {
     private productRepository: Repository<Product>
   ) { }
 
-  create(createProductDto: CreateProductDto): Promise<Product> {
-    const newProduct = this.productRepository.create(createProductDto);
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    const newProduct = await this.productRepository.create(createProductDto);
 
     return this.productRepository.save(newProduct);
   }
 
-  findAll() {
-    return `This action returns all products`;
+  findAll(): Promise<Product[]> {
+    return this.productRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  findOne(id: number): Promise<Product> {
+    return this.productRepository.findOneOrFail(id)
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+    return this.productRepository.save({id, ...updateProductDto})
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number): Promise<Product> {
+    const productToDelete = await this.productRepository.findOne(id)
+
+    return this.productRepository.remove(productToDelete)
   }
 }
