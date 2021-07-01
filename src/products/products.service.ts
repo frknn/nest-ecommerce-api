@@ -20,7 +20,7 @@ export class ProductsService {
   }
 
   findAll(): Promise<Product[]> {
-    return this.productRepository.find();
+    return this.productRepository.find({relations: ['images']});
   }
 
   findOne(id: number): Promise<Product> {

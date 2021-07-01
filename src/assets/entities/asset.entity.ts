@@ -15,6 +15,9 @@ export class Asset {
   @Column()
   url: string;
 
+  @Column()
+  productId: number;
+
   @ManyToOne(() => Product, product => product.images)
   product: Product;
 }
