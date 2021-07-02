@@ -31,7 +31,7 @@ export class CategoriesService {
   }
 
   async remove(id: number): Promise<Category> {
-    const categoryToDelete = await this.categoryRepository.findOne(id)
+    const categoryToDelete = await this.findOne(id)
 
     return this.categoryRepository.remove(categoryToDelete)
   }

@@ -16,10 +16,13 @@ export class Variant {
   @Column()
   name: string;
 
-  @OneToMany(() => Option, option => option.variant, { eager: true })
+  @OneToMany(() => Option, option => option.variant, { eager: true, cascade: ["insert", "update", "remove"] })
   options: Option[]
 
   @ManyToOne(() => Product, product => product.variants)
   product: Product
+
+  @Column()
+  productId: number;
 
 }

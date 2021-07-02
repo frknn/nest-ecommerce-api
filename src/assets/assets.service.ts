@@ -30,7 +30,7 @@ export class AssetsService {
   }
 
   async remove(id: number): Promise<Asset> {
-    const assetToDelete = await this.assetRepository.findOne(id)
+    const assetToDelete = await this.findOne(id)
 
     return this.assetRepository.remove(assetToDelete)
   }

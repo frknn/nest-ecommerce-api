@@ -20,20 +20,20 @@ export class ProductsService {
   }
 
   findAll(): Promise<Product[]> {
-    return this.productRepository.find({relations: ['images']});
+    return this.productRepository.find({relations: ['images','variants']});
   }
 
   findOne(id: number): Promise<Product> {
-    return this.productRepository.findOneOrFail(id)
+    return this.productRepository.findOneOrFail(id);
   }
 
   update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
-    return this.productRepository.save({id, ...updateProductDto})
+    return this.productRepository.save({id, ...updateProductDto});
   }
 
   async remove(id: number): Promise<Product> {
-    const productToDelete = await this.productRepository.findOne(id)
+    const productToDelete = await this.findOne(id);
 
-    return this.productRepository.remove(productToDelete)
+    return this.productRepository.remove(productToDelete);
   }
 }
