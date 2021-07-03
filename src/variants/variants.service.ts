@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreateVariantDto } from './dto/create-variant.dto';
 import { UpdateVariantDto } from './dto/update-variant.dto';
 import { Variant } from './entities/variant.entity';
@@ -12,7 +12,7 @@ export class VariantsService {
     private readonly variantRepository: Repository<Variant>
   ) { }
 
-  async create(createVariantDto: CreateVariantDto, productId: number): Promise<Variant> {
+  async create(productId: number, createVariantDto: CreateVariantDto): Promise<Variant> {
     const newVariant = await this.variantRepository.create(
       {
         productId,
@@ -32,8 +32,9 @@ export class VariantsService {
     return this.variantRepository.findOneOrFail(variantId, { where: { productId } });
   }
 
-  update(id: number, updateVariantDto: UpdateVariantDto): Promise<Variant> {
-    return this.variantRepository.save({ id, ...updateVariantDto });
+  update(productId: number, variantId: number, updateVariantDto: UpdateVariantDto): Promise<Variant> {
+    return this.variantRepository.save({ id: variantId, productId, ...updateVariantDto })
+
   }
 
   async remove(productId: number, variantId: number): Promise<Variant> {

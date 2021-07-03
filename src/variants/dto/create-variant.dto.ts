@@ -1,5 +1,5 @@
 import { Type } from "class-transformer";
-import { IsNotEmpty, IsString, ValidateNested } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsNotEmpty, IsString, NotEquals, ValidateNested } from "class-validator";
 import { CreateOptionDto } from "src/options/dto/create-option.dto";
 
 export class CreateVariantDto {
@@ -7,6 +7,7 @@ export class CreateVariantDto {
   @IsString()
   name: string;
 
+  @ArrayNotEmpty()
   @ValidateNested()
   @Type(() => CreateOptionDto)
   options: CreateOptionDto[]

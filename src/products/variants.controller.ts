@@ -3,6 +3,7 @@ import { CreateVariantDto } from 'src/variants/dto/create-variant.dto';
 import { UpdateVariantDto } from 'src/variants/dto/update-variant.dto';
 import { Variant } from 'src/variants/entities/variant.entity';
 import { VariantsService } from 'src/variants/variants.service';
+import { UpdateResult } from 'typeorm';
 
 
 @Controller('products/:productId/variants')
@@ -11,10 +12,10 @@ export class ProductVariantsController {
 
   @Post()
   create(
-    @Body() createVariantDto: CreateVariantDto,
-    @Param('productId', ParseIntPipe) productId: number
+    @Param('productId', ParseIntPipe) productId: number,
+    @Body() createVariantDto: CreateVariantDto
   ): Promise<Variant> {
-    return this.variantsService.create(createVariantDto, productId);
+    return this.variantsService.create(productId, createVariantDto);
   }
 
   @Get()
@@ -34,18 +35,18 @@ export class ProductVariantsController {
 
   @Patch(':variantId')
   update(
-    @Body() updateVariantDto: UpdateVariantDto,
     @Param('productId', ParseIntPipe) productId: number,
-    @Param('variantId', ParseIntPipe) variantId: number
-  ) {
-    return this.variantsService.update(variantId, updateVariantDto);
+    @Param('variantId', ParseIntPipe) variantId: number,
+    @Body() updateVariantDto: UpdateVariantDto
+  ): Promise<Variant> {
+    return this.variantsService.update(productId, variantId, updateVariantDto);
   }
 
   @Delete(':variantId')
   remove(
     @Param('productId', ParseIntPipe) productId: number,
     @Param('variantId', ParseIntPipe) variantId: number
-  ) {
+  ): Promise<Variant> {
     return this.variantsService.remove(variantId, productId);
   }
 }

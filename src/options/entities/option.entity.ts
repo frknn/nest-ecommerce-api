@@ -17,8 +17,4 @@ export class Option {
 
   @ManyToOne(() => Variant, variant => variant.options, { onDelete: "CASCADE" })
   variant: Variant;
-
-  @Column()
-  variantId: number;
-
 }
