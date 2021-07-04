@@ -13,19 +13,22 @@ export class Merchant {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column({ default: 'My Store' })
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @Column()
-  contactEmail: string;
+  @Column({ unique: true })
+  email: string;
 
   @Column()
+  password: string;
+
+  @Column({ nullable: true })
   contactPhone: string;
 
-  @Column()
+  @Column({ nullable: true })
   adress: string;
 
   @OneToMany(() => Product, product => product.merchant)

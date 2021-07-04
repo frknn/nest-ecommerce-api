@@ -3,7 +3,6 @@ import { CreateVariantDto } from 'src/variants/dto/create-variant.dto';
 import { UpdateVariantDto } from 'src/variants/dto/update-variant.dto';
 import { Variant } from 'src/variants/entities/variant.entity';
 import { VariantsService } from 'src/variants/variants.service';
-import { UpdateResult } from 'typeorm';
 
 
 @Controller('products/:productId/variants')

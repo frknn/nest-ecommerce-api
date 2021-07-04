@@ -1,26 +1,42 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateMerchantDto } from './dto/create-merchant.dto';
 import { UpdateMerchantDto } from './dto/update-merchant.dto';
+import { Merchant } from './entities/merchant.entity';
 
-@Injectable()
+@Injectable(
+)
 export class MerchantsService {
-  create(createMerchantDto: CreateMerchantDto) {
-    return 'This action adds a new merchant';
+  constructor(
+    @InjectRepository(Merchant)
+    private readonly merchantRepository: Repository<Merchant>
+  ) { }
+
+  async create(createMerchantDto: CreateMerchantDto): Promise<Merchant> {
+    const merchant = await this.merchantRepository.findOne({ where: { email: createMerchantDto.email } })
+    if (merchant) {
+      throw new BadRequestException("Bu email adresi kullanımda!");
+    }
+    const newMerchant = await this.merchantRepository.create(createMerchantDto)
+    return this.merchantRepository.save(newMerchant)
   }
 
-  findAll() {
-    return `This action returns all merchants`;
+  findAll(): Promise<Merchant[]> {
+    return this.merchantRepository.find()
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} merchant`;
+  findOne(id: number): Promise<Merchant> {
+    return this.merchantRepository.findOneOrFail(id)
   }
 
-  update(id: number, updateMerchantDto: UpdateMerchantDto) {
-    return `This action updates a #${id} merchant`;
+  update(id: number, updateMerchantDto: UpdateMerchantDto): Promise<Merchant> {
+    return this.merchantRepository.save({ id, ...updateMerchantDto })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} merchant`;
+  async remove(id: number): Promise<Merchant> {
+    const merchantToRemove = await this.findOne(id)
+
+    return this.merchantRepository.remove(merchantToRemove)
   }
 }
