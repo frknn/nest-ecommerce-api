@@ -12,18 +12,24 @@ export class Customer {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column({ nullable: true })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
   lastName: string;
 
   @Column()
   email: string;
 
   @Column()
+  password: string;
+
+  @Column({ nullable: true })
   phone: string;
 
   @ManyToOne(() => Merchant, merchant => merchant.customers)
   merchant: Merchant;
+
+  @Column()
+  merchantId: number;
 }

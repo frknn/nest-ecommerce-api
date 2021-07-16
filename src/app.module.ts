@@ -9,10 +9,19 @@ import { OptionsModule } from './options/options.module';
 import { CategoriesModule } from './categories/categories.module';
 import { AssetsModule } from './assets/assets.module';
 import { MerchantsModule } from './merchants/merchants.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 import config from '../ormconfig'
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        JWT_SECRET: Joi.string().required(),
+        JWT_EXPIRATION_TIME: Joi.string().required()
+      })
+    }),
     TypeOrmModule.forRoot(config),
     ProductsModule,
     CustomersModule,
@@ -20,7 +29,8 @@ import config from '../ormconfig'
     OptionsModule,
     CategoriesModule,
     AssetsModule,
-    MerchantsModule
+    MerchantsModule,
+    AuthenticationModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { Customer } from "src/customers/entities/customer.entity";
 import { Product } from "src/products/entities/product.entity";
 import { Entity, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, Column, OneToMany } from "typeorm";
@@ -23,6 +24,7 @@ export class Merchant {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column({ nullable: true })
